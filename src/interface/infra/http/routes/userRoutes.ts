@@ -8,4 +8,12 @@ const userController = new UserController();
 // Aqui usamos o handler diretamente
 router.post('/users', userController.create);
 
+router.get('/get', userController.getUsers);
+
+router.get('/getuser/:id', userController.getUsersId);
+
+router.put('/updateuser', userController.updateUser);
+        
+router.delete('/deleteuser/:id', userController.deleteUser);
+
 export default router;

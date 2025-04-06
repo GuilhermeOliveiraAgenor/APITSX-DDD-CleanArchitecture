@@ -18,8 +18,33 @@ export class PrismaUserRepository implements IUSerRepository{
 
         if(!user) return null;
 
-        return new User(user.id, user.name, user.email);
+        return new User(user);
 
+    }
+
+    async getUsers(): Promise<User[]> {
+        const user = await prisma.user.findMany();
+        return user.map((data) => new User(data))
+    }
+
+    async getUsersId(id: number): Promise<User | null> {
+        const user = await prisma.user.findUnique({where: {id}});
+        if(!user) return null;
+        return new User(user);
+    }
+
+    async updateUser(user: User): Promise<void> {
+        await prisma.user.update({where: {id: user.id},
+        data:{
+            name: user.name,
+            email: user.email
+        }
+    })
+    
+    }
+
+    async deleteUser(id: number): Promise<void> {
+        await prisma.user.delete({where: {id: id}})
     }
 
 }

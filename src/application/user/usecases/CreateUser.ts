@@ -14,7 +14,7 @@ export class CreateUser{
                 throw new Error ('User already exists');
         }
 
-        const user = new User(0, data.name, data.email);
+        const user = new User({id: 0, name: data.name, email: data.email});
         await this.userRepository.create(user);
 
     }
